@@ -1,0 +1,73 @@
+/*
+ * This is a gradle build file
+ * If you import it with idea it will automatically set up the project
+ * 
+ * To use with eclipse you use Import->Gradle->Existing Gradle Project
+ * 
+ * Alternatively you can run it IDE-less by opening a terminal in the root folder and
+ * calling ./gradlew run
+ */
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+// Will need updating if you change your package structure
+mainClassName = "uk.ac.cam.cl.furthergfx.crsid.tick.Tick"
+
+// Project version
+version = '1.0.0'
+
+// Defines the result of the jar should one be created
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'FGraphics-LWJGL3', 'Implementation-Version': version
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+// Source locations for various files
+// As this isn't using the standard maven/gradle structure
+// We have to manually set this up
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/']
+        }
+        resources {
+            srcDirs = ['resources/']
+        }
+    }
+	test {
+        java {
+            srcDirs = ['tst/']
+        }
+    }
+}
+
+// Repositories to locate dependencies from
+repositories {
+    mavenCentral()
+}
+
+// Natives are staticly defined; could be dynamically done
+// Which would reduce the bulk, but increase the complexity of the file
+dependencies {
+  compile fileTree(dir: 'lib/JOML', include: '*.jar')
+  compile "org.lwjgl:lwjgl:+"
+  compile "org.lwjgl:lwjgl:+:natives-windows"
+  compile "org.lwjgl:lwjgl:+:natives-windows-x86"
+  compile "org.lwjgl:lwjgl:+:natives-linux"
+  compile "org.lwjgl:lwjgl:+:natives-macos"
+  compile "org.lwjgl:lwjgl-glfw:+"
+  compile "org.lwjgl:lwjgl-glfw:+:natives-windows"
+  compile "org.lwjgl:lwjgl-glfw:+:natives-windows-x86"
+  compile "org.lwjgl:lwjgl-glfw:+:natives-linux"
+  compile "org.lwjgl:lwjgl-glfw:+:natives-macos"
+  compile "org.lwjgl:lwjgl-opengl:+"
+  compile "org.lwjgl:lwjgl-opengl:+:natives-windows"
+  compile "org.lwjgl:lwjgl-opengl:+:natives-windows-x86"
+  compile "org.lwjgl:lwjgl-opengl:+:natives-linux"
+  compile "org.lwjgl:lwjgl-opengl:+:natives-macos"
+  compile group: 'org.joml', name: 'joml', version: '1.6.6'
+}
